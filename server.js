@@ -25,7 +25,7 @@ mongoose
     `mongodb+srv://${DB_USER}:${DB_PASSWORD}@codeleap.qisctke.mongodb.net/?retryWrites=true&w=majority`
   )
   .then(() => {
-    app.listen(3100);
+    app.listen(process.env.PORT || 3000);
     console.log("Conectou no banco!");
   })
   .catch((err) => console.log(err));
