@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require('cors');
+require('dotenv').config()
 
 app.use(cors());
 
@@ -17,12 +18,9 @@ const itemRoutes = require("./routes/itemRoutes");
 
 app.use("/item", itemRoutes);
 
-const DB_USER = "icristianosql";
-const DB_PASSWORD = encodeURIComponent("#86790102aB");
-
 mongoose
   .connect(
-    `mongodb+srv://${DB_USER}:${DB_PASSWORD}@codeleap.qisctke.mongodb.net/?retryWrites=true&w=majority`
+    `mongodb+srv://${process.env.DB_USER}:${encodeURIComponent(process.env.DB_PASSWORD)}@codeleap.qisctke.mongodb.net/?retryWrites=true&w=majority`
   )
   .then(() => {
     app.listen(process.env.PORT || 3000);
