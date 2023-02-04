@@ -1,20 +1,31 @@
-// config incial
-const express = require('express');
+const express = require("express");
+const mongoose = require("mongoose");
 const app = express();
+const cors = require('cors');
 
-//forma de ler JSON
+app.use(cors());
+
 app.use(
-    express.urlencoded({
-        extended: true,
-    })
-)
+  express.urlencoded({
+    extended: true,
+  })
+);
 
-app.use(express.json())
+app.use(express.json());
 
-//rota inicial / endpoint
-app.get('/', (req, res) => {
-    res.json({message: 'Oi Express'})
-})
+const itemRoutes = require("./routes/itemRoutes");
 
-// Entregar uma porta
-app.listen(3100)
+app.use("/item", itemRoutes);
+
+const DB_USER = "icristianosql";
+const DB_PASSWORD = encodeURIComponent("#86790102aB");
+
+mongoose
+  .connect(
+    `mongodb+srv://${DB_USER}:${DB_PASSWORD}@codeleap.qisctke.mongodb.net/?retryWrites=true&w=majority`
+  )
+  .then(() => {
+    app.listen(3100);
+    console.log("Conectou no banco!");
+  })
+  .catch((err) => console.log(err));
